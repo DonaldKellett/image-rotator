@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Image Rotator</title>
+</head>
+<body>
+<h2>Image Rotator</h2>
+<img id="image" src="sun.gif" style="width: 30%; height: 30%" />
+<h1 id="h1"></h1>
+<p>I think the title should be pretty self-explanatory ... this is an example of a webpage/application with a rotating image.</p>
+<p>I chose the image of the Sun as the image to be rotated for two main reasons:</p>
+<ol>
+    <li>The Sun (as depicted in this cartoon image) has a lot of lines of rotational symmetry; therefore it is a perfect candidate for image rotation.</li>
+    <li>The only reason I wanted to test this out was because of this webpage: <a href="http://summer.ust.hk/cgi-bin/2015/index.php" target="_blank">http://summer.ust.hk/cgi-bin/2015/index.php</a></li>
+</ol>
+<p><strong>Thank you, <a href="http://www.w3schools.com" target="_blank">W3Schools</a>, for teaching me how to create a Web Worker which enabled me to create this animation.</strong></p>
+<script type="text/javascript">
+var w;
+
+function startWorker() {
+    if(typeof(Worker) !== "undefined") {
+        if(typeof(w) == "undefined") {
+            w = new Worker("imageRotate.js");
+        }
+        w.onmessage = function(event) {
+            document.getElementById("image").style.WebkitTransform = "rotate("+event.data+"deg)";
+        };
+    } else {
+        document.getElementById("h1").innerHTML = "Sorry! No Web Worker support.";
+    }
+}
+
+startWorker();
+</script>
+</body>
+</html>
